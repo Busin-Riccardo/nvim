@@ -1,0 +1,14 @@
+-- local tmux = require("tmux")
+-- local opts  = { silent = true, noremap = true }
+-- 
+-- tmux.setup({
+-- 	navigation = {
+-- 		enable_default_keybindings = false
+-- 	}
+-- })
+-- 
+-- 
+-- vim.keymap.set("n", "<C-w>l", tmux.move_right, opts)
+-- vim.keymap.set("n", "<C-w>h", tmux.move_left, opts)
+-- vim.keymap.set("n", "<C-w>j", tmux.move_bottom, opts)
+-- vim.keymap.set("n", "<C-w>h", tmux.move_top, opts)
