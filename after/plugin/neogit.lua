@@ -1,3 +1,5 @@
 require("neogit").setup()
 
-vim.keymap.set("n", "<leader>gg", require("neogit").open, { desc = "[G]it [G]raph" })
+vim.keymap.set("n", "<leader>gg", function()
+	require("neogit").open({ kind = "split" })
+end, { desc = "[G]it [G]raph" })
