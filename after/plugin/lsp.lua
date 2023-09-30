@@ -8,6 +8,9 @@ require("mason-lspconfig").setup({
 	ensure_installed = {},
 	handlers = {
 		lsp_zero.default_setup,
+		ocamllsp = function()
+			require("lspconfig").ocamllsp.setup({})
+		end,
 		graphql = function()
 			require("lspconfig").graphql.setup({
 				filetypes = { "graphql", "typescript", "typescriptreact", "javascript", "javascriptreact" },
@@ -37,3 +40,8 @@ lsp_zero.on_attach(function(client, bufnr)
 	vim.keymap.set("n", "<leader>dp", vim.diagnostic.goto_prev, { desc = "[D]iagnostic [P]rev", noremap = true })
 	vim.keymap.set("n", "<C-.>", vim.lsp.buf.code_action, { desc = "Code Action", noremap = true })
 end)
+
+vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+	desc = "Lsp format on save",
+	callback = vim.lsp.buf.format,
+})
