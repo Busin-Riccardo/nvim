@@ -84,6 +84,11 @@ _G.packer_plugins = {
     path = "/Users/riccardo/.local/share/nvim/site/pack/packer/start/LuaSnip",
     url = "https://github.com/L3MON4D3/LuaSnip"
   },
+  ["barbar.nvim"] = {
+    loaded = true,
+    path = "/Users/riccardo/.local/share/nvim/site/pack/packer/start/barbar.nvim",
+    url = "https://github.com/romgrk/barbar.nvim"
+  },
   ["cmp-nvim-lsp"] = {
     loaded = true,
     path = "/Users/riccardo/.local/share/nvim/site/pack/packer/start/cmp-nvim-lsp",
@@ -184,10 +189,20 @@ _G.packer_plugins = {
     path = "/Users/riccardo/.local/share/nvim/site/pack/packer/start/nvim-treesitter",
     url = "https://github.com/nvim-treesitter/nvim-treesitter"
   },
+  ["nvim-treesitter-reason"] = {
+    loaded = true,
+    path = "/Users/riccardo/.local/share/nvim/site/pack/packer/start/nvim-treesitter-reason",
+    url = "https://github.com/danielo515/nvim-treesitter-reason"
+  },
   ["nvim-ufo"] = {
     loaded = true,
     path = "/Users/riccardo/.local/share/nvim/site/pack/packer/start/nvim-ufo",
     url = "https://github.com/kevinhwang91/nvim-ufo"
+  },
+  ["nvim-web-devicons"] = {
+    loaded = true,
+    path = "/Users/riccardo/.local/share/nvim/site/pack/packer/start/nvim-web-devicons",
+    url = "https://github.com/nvim-tree/nvim-web-devicons"
   },
   ["onedark.nvim"] = {
     config = { "\27LJ\2\nb\0\0\3\0\5\0\f6\0\0\0'\2\1\0B\0\2\0029\0\2\0005\2\3\0B\0\2\0016\0\0\0'\2\1\0B\0\2\0029\0\4\0B\0\1\1K\0\1\0\tload\1\0\1\nstyle\vwarmer\nsetup\fonedark\frequire\0" },

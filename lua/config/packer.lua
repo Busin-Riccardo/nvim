@@ -87,4 +87,8 @@ require("packer").startup(function(use)
 	use("github/copilot.vim")
 
 	use({ "kevinhwang91/nvim-ufo", requires = "kevinhwang91/promise-async" })
+
+	use("danielo515/nvim-treesitter-reason")
+
+	use({ "romgrk/barbar.nvim", requires = { "nvim-tree/nvim-web-devicons" } })
 end)
