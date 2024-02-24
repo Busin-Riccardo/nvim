@@ -13,7 +13,14 @@ require("mason-lspconfig").setup({
             require("lspconfig").ocamllsp.setup({
                 cmd = { "ocamllsp" },
                 filetypes = { "ocaml", "ocaml.menhir", "ocaml.interface", "ocaml.ocamllex", "reason", "dune" },
-                root_dir = lsp.util.root_pattern("*.opam", "esy.json", "package.json", ".git", "dune-project", "dune-workspace"),
+                root_dir = lsp.util.root_pattern(
+                    "*.opam",
+                    "esy.json",
+                    "package.json",
+                    ".git",
+                    "dune-project",
+                    "dune-workspace"
+                ),
             })
         end,
         graphql = function()
@@ -28,11 +35,17 @@ require("mason-lspconfig").setup({
                 ),
             })
         end,
+        html = function()
+            require("lspconfig").html.setup({
+                filetypes = { "html", "template" },
+            })
+        end,
         tailwindcss = function()
             -- adds support for .ml files with tyxml
             require("lspconfig").tailwindcss.setup({
                 filetypes = {
                     -- html
+                    "gotmpl",
                     "aspnetcorerazor",
                     "astro",
                     "astro-markdown",
@@ -67,6 +80,8 @@ require("mason-lspconfig").setup({
                     "razor",
                     "slim",
                     "twig",
+                    "templ",
+                    "template",
                     -- css
                     "css",
                     "less",
@@ -93,6 +108,8 @@ require("mason-lspconfig").setup({
                         eelixir = "html-eex",
                         eruby = "erb",
                         ocaml = "html",
+                        template = "html",
+                        gotmpl = "html",
                     },
                 },
                 experimental = {
@@ -171,27 +188,76 @@ npm install -g @tailwindcss/language-server
         end,
     },
 })
+require("mason-nvim-dap").setup({ ensure_installed = { "php" } })
 
 -- vim.lsp.set_log_level 'debug'
+--
+-- vim.filetype.add({ extension = { templ = "templ" } })
 
 lsp_zero.on_attach(function(client, bufnr)
     -- see :help lsp-zero-keybindings
     -- to learn the available actions
     require("lsp-status").on_attach(client)
+    local telescope = require("telescope.builtin")
     lsp_zero.default_keymaps({ buffer = bufnr })
     vim.keymap.set("n", "<leader>ca", vim.lsp.buf.code_action, { desc = "[C]ode [A]ction", noremap = true })
     vim.keymap.set("n", "<leader>gd", vim.lsp.buf.definition, { desc = "[G]o to [d]efinition", noremap = true })
     vim.keymap.set("n", "<leader>gD", vim.lsp.buf.declaration, { desc = "[G]o to [D]eclaration", noremap = true })
-    vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, { desc = "List references", noremap = true })
+    -- vim.keymap.set("n", "<leader>gr", vim.lsp.buf.references, { desc = "List references", noremap = true })
+    vim.keymap.set("n", "<leader>gr", telescope.lsp_references, { desc = "List references", noremap = true })
     vim.keymap.set("n", "<leader>ds", vim.diagnostic.open_float, { desc = "[D]iagnostic [S]how", noremap = true })
     vim.keymap.set("n", "<leader>dn", vim.diagnostic.goto_next, { desc = "[D]iagnostic [N]ext", noremap = true })
     vim.keymap.set("n", "<leader>dp", vim.diagnostic.goto_prev, { desc = "[D]iagnostic [P]rev", noremap = true })
-    vim.keymap.set("n", "<C-.>", vim.lsp.buf.code_action, { desc = "Code Action", noremap = true })
+    -- vim.keymap.set("n", "<C-.>", vim.lsp.buf.code_action, { desc = "Code Action", noremap = true })
 end)
+
+-- lsp.templ.setup({
+--     cmd = { "templ", "lsp", "-http=localhost:7474", "-log=/Users/riccardo/templ.log" },
+--     filetypes = { "templ" },
+--     root_dir = lsp.util.root_pattern("go.mod", ".git"),
+--     settings = {},
+-- })
+
+lsp.html.setup({
+    filetypes = { "html", "template" },
+})
+
+lsp.gopls.setup({
+    filetypes = { "go", "template" },
+})
+
+lsp.htmx.setup({
+    filetypes = { "html", "template" },
+})
+
+
+lsp.tsserver.setup({
+    on_init = function(client)
+        client.server_capabilities.documentFormattingProvider = false
+        client.server_capabilities.documentFormattingRangeProvider = false
+    end,
+})
+
+lsp.eslint.setup({
+    on_init = function(client)
+        client.server_capabilities.documentFormattingProvider = true
+        client.server_capabilities.documentFormattingRangeProvider = true
+    end,
+})
+
+-- lsp.yamlls.setup({
+-- })
 
 vim.api.nvim_create_autocmd({ "BufWritePost" }, {
     desc = "Lsp format on save",
     callback = function()
-        vim.lsp.buf.format()
+        if vim.bo.filetype == "template" then
+            return
+        end
+        vim.lsp.buf.format({
+            filter = function(client)
+                return client.name ~= "tsserver" and client.name ~= "volar"
+            end,
+        })
     end,
 })

@@ -1,3 +1,4 @@
+if packer_plugins["barbar.nvim"] and packer_plugins["barbar.nvim"].loaded then
 vim.g.barbar_auto_setup = false -- disable auto-setup
 
 require("barbar").setup({
@@ -38,7 +39,7 @@ require("barbar").setup({
         button = "",
         -- Enables / disables diagnostic symbols
         diagnostics = {
-            [vim.diagnostic.severity.ERROR] = { enabled = true, icon = "ﬀ" },
+            [vim.diagnostic.severity.ERROR] = { enabled = true, icon = "E" },
             [vim.diagnostic.severity.WARN] = { enabled = false },
             [vim.diagnostic.severity.INFO] = { enabled = false },
             [vim.diagnostic.severity.HINT] = { enabled = true },
@@ -107,3 +108,4 @@ require("barbar").setup({
     -- where X is the buffer number. But only a static string is accepted here.
     no_name_title = nil,
 })
+end

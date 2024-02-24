@@ -51,20 +51,10 @@ require("packer").startup(function(use)
 
 	use("nvim-treesitter/playground")
 
+	use({ "nvim-telescope/telescope-fzf-native.nvim", run = "make" })
 	use({
 		"nvim-telescope/telescope.nvim",
 		requires = { { "nvim-lua/plenary.nvim" } },
-	})
-
-	use({
-		-- Theme inspired by Atom
-		"navarasu/onedark.nvim",
-		config = function()
-			require("onedark").setup({
-				style = "warmer",
-			})
-			require("onedark").load()
-		end,
 	})
 
 	use({
@@ -89,6 +79,49 @@ require("packer").startup(function(use)
 	use({ "kevinhwang91/nvim-ufo", requires = "kevinhwang91/promise-async" })
 
 	use("danielo515/nvim-treesitter-reason")
+	use("nvim-tree/nvim-web-devicons")
 
-	use({ "romgrk/barbar.nvim", requires = { "nvim-tree/nvim-web-devicons" } })
+	-- use({ "romgrk/barbar.nvim", requires = { "nvim-tree/nvim-web-devicons" } })
+
+	use("mfussenegger/nvim-dap")
+	use("leoluz/nvim-dap-go")
+	use({ "rcarriga/nvim-dap-ui", requires = { "mfussenegger/nvim-dap" } })
+
+	use({
+		"stevearc/oil.nvim",
+		config = function()
+			require("oil").setup({
+				view_options = {
+					-- Show files and directories that start with "."
+					show_hidden = true,
+				},
+			})
+		end,
+	})
+
+	use({
+		"ThePrimeagen/harpoon",
+		branch = "harpoon2",
+		requires = { { "nvim-lua/plenary.nvim" } },
+	})
+
+	-- THEME
+
+	use({
+		"ellisonleao/gruvbox.nvim",
+	})
+	-- use({
+	--     -- Theme inspired by Atom
+	--     "navarasu/onedark.nvim",
+	--     config = function()
+	--         require("onedark").setup({
+	--             style = "warmer",
+	--         })
+	--         require("onedark").load()
+	--     end,
+	-- })
+	--
+	use({
+		"jay-babu/mason-nvim-dap.nvim",
+	})
 end)
