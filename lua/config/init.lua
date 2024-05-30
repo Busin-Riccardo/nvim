@@ -1,3 +1,7 @@
-require"config.set"
-require"config.packer"
-require"config.remap"
+require("config.set")
+require("config.deps")
+
+-- require("config.packer")
+
+require("lazy").setup("plugins")
+require("config.remap")

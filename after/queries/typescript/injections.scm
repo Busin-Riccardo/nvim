@@ -12,3 +12,14 @@
               )
   )
 )
+
+(call_expression
+    function: (
+        (await_expression (identifier) @_name)
+        (#eq? @_name "sql")
+    )
+    arguments: (
+        (template_string (string_fragment) @injection.content)
+        (#set! injection.language "sql")
+    )
+)
