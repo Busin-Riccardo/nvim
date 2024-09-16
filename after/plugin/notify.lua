@@ -11,6 +11,7 @@ require("notify").setup({
     level = 2,
     minimum_width = 20,
     max_width = 50,
+    max_height = 10,
     render = "compact",
     stages = "static",
     timeout = 5000,

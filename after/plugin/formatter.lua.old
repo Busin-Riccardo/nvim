@@ -1,0 +1,62 @@
+local prettier_excluded_projects = {
+    "personal/rbeasy",
+}
+
+local function prettier_is_excluded_from_current_project()
+    local cwd = vim.fn.getcwd()
+    for _, v in pairs(prettier_excluded_projects) do
+        if string.match(cwd, v) then
+            return true
+        end
+    end
+    return false
+end
+
+local prettierd = {}
+local prettier = {}
+if not prettier_is_excluded_from_current_project() then
+    table.insert(prettierd, require("formatter.filetypes.javascript").prettierd)
+    table.insert(prettier, require("formatter.filetypes.javascript").prettier)
+end
+
+-- local javascript = prettierd
+-- local javascriptreact = prettierd
+-- local typescript = prettierd
+-- local typescriptreact = prettierd
+-- local template = prettier
+
+require("formatter").setup({
+    logging = true,
+    log_level = vim.log.levels.WARN,
+    filetype = {
+        -- javascript = {
+        --     require("formatter.filetypes.javascript").eslint_d,
+        -- },
+        -- javascriptreact = {
+        --     require("formatter.filetypes.javascriptreact").eslint_d,
+        -- },
+        typescript = {
+            require("formatter.filetypes.typescript").prettierd,
+        },
+        typescriptreact = {
+            require("formatter.filetypes.typescriptreact").prettierd,
+        },
+        -- lua = {
+        --     require("formatter.filetypes.lua").stylua,
+        -- },
+        graphql = {
+            require("formatter.filetypes.graphql").prettierd,
+        },
+        -- template = template,
+        ["*"] = {
+            require("formatter.filetypes.any").remove_trailing_whitespace,
+        },
+    },
+})
+
+vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+    desc = "Format on save",
+    callback = function()
+        vim.cmd.FormatWrite()
+    end,
+})

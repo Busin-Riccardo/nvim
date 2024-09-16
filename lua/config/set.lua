@@ -40,3 +40,9 @@ vim.opt.termguicolors = true
 vim.opt.scrolloff = 8
 
 vim.opt.updatetime = 50
+
+vim.opt.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+vim.opt.foldtext = "v:lua.vim.treesitter.foldtext()"
+
+vim.wo.foldmethod = "expr"
+vim.wo.foldexpr = "v:lua.vim.treesitter.foldexpr()"

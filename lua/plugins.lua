@@ -3,7 +3,7 @@ return {
         "williamboman/mason.nvim",
         config = function()
             require("mason").setup()
-        end
+        end,
     },
     "mbbill/undotree",
     "nvim-lualine/lualine.nvim",
@@ -17,7 +17,7 @@ return {
         },
     },
     "mfussenegger/nvim-lint",
-    "mhartington/formatter.nvim",
+    -- "mhartington/formatter.nvim",
     "nvim-tree/nvim-tree.lua",
     {
         "NeogitOrg/neogit",
@@ -55,6 +55,13 @@ return {
         version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
         -- install jsregexp (optional!).
         build = "make install_jsregexp",
+        config = function()
+            local ls = require("luasnip")
+
+            vim.keymap.set({ "i" }, "<C-l>", function()
+                ls.jump(1)
+            end, { silent = true })
+        end,
     },
     {
         "VonHeikemen/lsp-zero.nvim",
@@ -94,4 +101,25 @@ return {
             require("transparent").setup()
         end,
     },
+    -- {
+    -- 	"hexdigest/go-enhanced-treesitter.nvim",
+    -- 	build = ":TSInstall go sql",
+    -- 	ft = "go",
+    -- },
+    {
+        "ray-x/go.nvim",
+        dependencies = { -- optional packages
+            "ray-x/guihua.lua",
+            "neovim/nvim-lspconfig",
+            "nvim-treesitter/nvim-treesitter",
+        },
+        config = function()
+            require("go").setup()
+        end,
+        event = { "CmdlineEnter" },
+        ft = { "go", "gomod" },
+        build = ':lua require("go.install").update_all_sync()', -- if you need to install/update all binaries
+    },
+    { "folke/neoconf.nvim" },
+    { "nanotee/sqls.nvim" },
 }
